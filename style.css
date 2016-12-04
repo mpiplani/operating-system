@@ -1,0 +1,46 @@
+div.ram ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+div.ram a:link, a:visited {
+    display: block;
+    
+   color:white;
+    background-color: #1C1C1F;
+    width: 160px;
+    text-align: center;
+    padding:20px;
+    text-decoration: none;
+    text-transform: uppercase;
+	font-size:20px;
+	font-family:Calibri (Body);
+}
+div.muv
+{
+	border:1px solid red; padding:5px; width:210px; margin-left:40px; float:left;
+}
+div.muv a
+{
+	text-decoration:none;
+}
+div.muv a:hover
+{
+	opacity:0.8;
+}
+div.ram a:hover, a:active {
+    background-color: black;
+	 color:#F3FAB1;
+	 font-size:21px;
+	 border-bottom:2px solid #F3FAB1;
+}
+div.ram
+{
+	background:;color:white;height:250px; width:200px; margin-top:8px; margin-left:-10px;;
+}
+
+div.muv1
+{
+	border:1px solid red; padding:5px; width:210px; margin-left:40px; margin-top:10px;float:left;
+}
