@@ -1,0 +1,2 @@
+Ans.
+ grep -w cheerful ~/Downloads/random.txt

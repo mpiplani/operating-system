@@ -1,0 +1,7 @@
+Ans. 
+  mkdir ~/Documents 
+  cd ~/Documents 
+  mkdir development cs101 lab1b test1  
+  cd ../ 
+  mkdir essays 
+  mkdir ~/Documents/essays/eng101

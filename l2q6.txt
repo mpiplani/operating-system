@@ -1,0 +1,55 @@
+Code:
+#include<unistd.h>
+#include<sys/types.h>
+#include<stdio.h>
+#include<sys/wait.h>
+#include<stdlib.h>
+int main()
+{
+ 
+int fd[2];
+pipe(fd);
+
+int n1=1;
+int n4=22;
+ int n2=8;
+ int n3=15;
+
+pid_t pid;
+pid=fork();
+           if(pid == 0)
+	    {
+            int *a;
+   	      pid_t pid1;
+	      pid1=fork();
+		if(pid1==0)
+		 {
+                   int i;int sum=0;
+                    for(i=n2;i<n3;i++)
+			{
+			  sum=sum+i;
+                        }
+                        close(fd[0]);
+                         write(fd[1],a,4);
+                 }
+               else
+                {
+                   int j;
+				int *a;
+                   int sum=0;
+		   for(j=n3;j<n4;j++)
+		    {
+		      sum=sum+j;
+		    }
+                   close(fd[1]);
+                    read(fd[0],a,4);
+                   sum=sum+*a;
+				printf("%d",sum);
+
+	         }
+
+	    }
+
+
+ 
+}

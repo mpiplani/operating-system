@@ -1,0 +1,140 @@
+Ans.   
+import java.util.ArrayList; 
+import java.util.Scanner;
+ public class SJF 
+{    
+   static class Data   
+     {         
+         int waiting_time;        
+         int turnaround_time;         
+         String PName;         
+         int arrival_time;       
+         int burst_time;       
+         Data(String _PName,int _at,int _bt)      
+         {            
+             this.PName=_PName;            
+             this.arrival_time=_at;             
+             this.burst_time=_bt;             
+             this.waiting_time=0;            
+             this.turnaround_time=0;        
+
+          }
+     } 
+/* This function sorts array containing process details. If sort_by is 'a', data is sorted by arrival time. 
+ If sort_by is 'b' , it sorts by burst time     Return value:- nothing */    
+
+ public static void sort(Data[] data,char sort_by)    
+ {        
+    Data temp;        
+    if(sort_by=='a')        
+     {            
+        for(int i=0;i<data.length;i++)         
+         {              
+           for(int j=0;j<data.length-1;j++)                
+             {                    
+                if(data[j].arrival_time>=data[j+1].arrival_time)  
+                   {                         
+                      if(data[j].arrival_time==data[j+1].arrival_time)                       
+                        {                             
+                           if(data[j].burst_time>data[j+1].burst_time)         
+                               {                                
+                                  temp=data[j];                                
+                                 data[j]=data[j+1]; 
+                                  data[j+1]=temp;                            
+                               }                         
+                        }                       
+                        else                    
+                        {                            
+                           temp=data[j];                          
+                           data[j]=data[j+1];                             
+                           data[j+1]=temp;                       
+                        }                    
+                  }                
+             }          
+         }         
+      }        
+      else        
+       {           
+           for(int i=0;i<data.length;i++)   
+              {                
+                for(int j=0;j<data.length-1;j++) 
+                   {                     
+                       if(data[j].burst_time>data[j+1].burst_time)                    
+                            {                        
+                                temp=data[j];                       
+                                data[j]=data[j+1];                       
+                                data[j+1]=temp;                    
+                            }                
+                   }            
+              }       
+       }   
+  }  
+   public static void main(String args[])   
+     {      
+        Scanner sc=new Scanner(System.in);   
+        Data[] data;        
+         System.out.println("Enter number of processes");      
+          int t=sc.nextInt();        
+          System.out.println("Enter name, arrival time and burst time for the processes");   
+            data = new Data[t];        
+           for(int i=0;i<t;i++)            
+           data[i]=new Data(sc.next(),sc.nextInt(),sc.nextInt());     
+            display(data);        
+            sort(data,'a');        
+            total_time=data[0].arrival_time;       
+            doSJF(data,0);         
+            System.out.println("After SJF");     
+            display(data);   
+     }    
+      static int total_time; 
+       static int count=0;   
+       /*    This function performs SJF on set of processes whose details are included in data. 
+        start is starting value after which process has to be scheduled.     */   
+        public static void doSJF(Data[] data,int start)    
+         {         
+             ArrayList<Data> temp=new ArrayList<>();       
+             data[start].waiting_time=(total_time-data[start].arrival_time)>0 ? total_time-data[start].arrival_time: 0;    
+             data[start].turnaround_time=data[start].burst_time+data[start].waiting_time;         
+      total_time=total_time+((data[start].arrival_time-total_time)>0 ? data[start].arrival_timetotal_time:0)+data[start].burst_time; 
+            int i=start+1;        
+            if(i !=data.length)         
+               while(total_time>data[i].arrival_time)          
+                  {                
+                     temp.add(data[i]);          
+                     i++;                 
+                     if(i==data.length)              
+                      break; 
+    
+                  }       
+                  if(start==data.length-1)    
+                   return;       
+                   Data temp_array[]=new Data[temp.size()]; 
+                   temp_array=temp.toArray(temp_array);      
+                   sort(temp_array,'b');        
+                   if(temp_array.length!=0)      
+                    {               
+                         Data t;           
+                          int index=find(data,temp_array[0],start);      
+                          t=data[index];            
+                         data[index]=data[start+1];            
+                          data[start+1]=t;        
+                    }     
+                    doSJF(data,start+1);   
+         }     
+          public static int find(Data[] data,Data element,int start)   
+            {         
+               for(int i=start;i<data.length;i++)      
+                   {          
+                      if(data[i].equals(element))          
+                          return i;         
+                    }        
+                           return -1; 
+             }       
+          public static void display(Data[] data)    
+             {        
+                 for(int i=0;i<data.length;i++) 
+                      {           
+                          System.out.println(data[i].PName+"  "+data[i].arrival_time+"  "+data[i].burst_time+"  "+data[i].waiting_time+"  "+data[i].turnaround_time);  
+                      }    
+             }
+ } 

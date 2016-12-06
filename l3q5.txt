@@ -1,0 +1,121 @@
+Ans.   
+import java.util.ArrayList; import java.util.Scanner;  
+//timeslice is set as 3.  
+public class RR  
+  {   
+      static class Data  
+        {         
+           int waiting_time;    
+           int turnaround_time;       
+            String PName;        
+           int arrival_time;        
+           int burst_time;         
+           Data(String _PName,int _at,int _bt)     
+             {           
+                this.PName=_PName;             
+                this.arrival_time=_at;             
+                this.burst_time=_bt;             
+                this.waiting_time=-1;          
+                this.turnaround_time=0;                      
+             }   
+        }  
+  
+/* This functions sorts by arrival time or burst time. If sort_by is 'a', it sorts by arrival time. 
+This code is copied from my SJF code which I have included */ 
+    
+  public static void sort(ArrayList<Data> data,char sort_by)  
+     {       
+        Data temp;       
+        if(sort_by=='a')     
+          {        
+             for(int i=0;i<data.size();i++) 
+                  {                
+                     for(int j=0;j<data.size()-1;j++)            
+                          {                   
+                            if(data.get(j).arrival_time>data.get(j+1).arrival_time)    
+                               {                       
+                                  temp=data.get(j);                     
+                                  data.set(j, data.get(j+1));                       
+                                   data.set(j+1,temp);                   
+                               }                            
+                           }            
+                  }       
+           }    
+     }     
+     static int timeslice=10; 
+     static int total_time=0;   
+      static ArrayList<Data> res_list  
+/* This method inserts a object of class Data in ArrayList<Data> data in correct position. 
+   Takes arguments:- ArrayList<Data> data which contains a list of details of processes.   
+ Element is Object of class Data which we have to insert    total_time is service time till that moment when function is called */  
+
+  public static void insert(ArrayList<Data> data,Data element,int total_time)    
+      {     
+         int flag=1;       
+          for(int i=0;i<data.size();i++)     
+             {           
+                if(data.get(i).arrival_time>total_time)    
+                   {               
+                       data.add(i,element);         
+                       flag=0;                
+                       break;         
+                   }       
+             }        
+             if(flag==1)       
+             data.add(element);   
+       }  
+/* This function performs round robin scheduling    
+Takes argument:- ArrayList named data which contains arrival_time, burst_time etc.
+ described in class Data     Returns:- null  */  
+
+
+   public static void roundrobin(ArrayList<Data> data) 
+      {        
+        if(data.get(0).waiting_time==-1)      
+          {            
+             data.get(0).waiting_time= (total_time-data.get(0).arrival_time) >0 ? total_time-data.get(0).arrival_time:0;   
+              total_time+=(data.get(0).arrival_time-total_time)>0? data.get(0).arrival_time-total_time : 0 ;    
+          }       
+          if(timeslice < data.get(0).burst_time)      
+             {          
+                 total_time+=timeslice;       
+                 data.get(0).burst_time=data.get(0).burst_time-timeslice;      
+                 data.get(0).turnaround_time+=timeslice;          
+                  insert(data,data.remove(0),total_time);      
+             } 
+           else     
+             {         
+                   total_time+=data.get(0).burst_time;         
+                   data.get(0).turnaround_time=total_time-data.get(0).arrival_time;      
+                   res_list.add(data.remove(0));      
+              }       
+               if(data.isEmpty())        
+               return;        
+                roundrobin(data);  
+      } 
+      public static void main(String args[])    
+         {      
+            res_list=new ArrayList<>();     
+            Scanner sc=new Scanner(System.in);       
+              ArrayList<Data> data=new ArrayList<>();     
+              System.out.println("Enter number of processes.");       
+              int t=sc.nextInt();       
+              System.out.println("Enter process name, arrival time and burst time");   
+               for(int i=0;i<t;i++)       
+                   {          
+                      data.add(new Data(sc.next(),sc.nextInt(),sc.nextInt()));    
+                    }        
+                    sort(data,'a');    
+                     total_time=data.get(0).arrival_time;  
+                     roundrobin(data);        
+                      System.out.println("After round robin.");  
+                      display(res_list);  
+        }   
+      public static void display(ArrayList<Data> data)  
+       {       
+           for(int i=0;i<data.size();i++) 
+              {           
+                 System.out.println(data.get(i).PName+"  "+data.get(i).arrival_time+"  "+data.get(i).burst_time+"  "+data.get(i).waiting_time+"  "+data.get(i).turnaround_time);    
+              }   
+        }
+ } 

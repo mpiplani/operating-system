@@ -1,0 +1,84 @@
+import java.util.Scanner;
+class sjf2
+{
+	public static void main(String args[])
+	{
+		System.out.print("enter the number of processes");
+		Scanner scan=new Scanner(System.in);
+		int l=scan.nextInt();
+		System.out.print("enter arrival time and burst time for procceses");
+	    int p[]=new int[l];
+		int at[]=new int[l];
+		int bt[]=new int[l];
+		int st[]=new int[l];
+		int tt[]=new int[l];
+		int q[]=new int[l];
+		for(int i=0;i<l;i++)
+		{
+			p[i]=i;
+			at[i]=scan.nextInt();
+			bt[i]=scan.nextInt();
+		}
+		int temp,temp1,temp2;
+//sorting at
+
+		for(int i=0;i<l;i++)
+		{
+			for(int j=0;j<l;j++)
+			{
+				if(at[j]>at[i])
+				{
+					temp=at[i];
+					at[i]=at[j];
+					at[j]=temp;
+					temp1=bt[i];
+					bt[i]=bt[j];
+					bt[j]=temp1;
+					temp2=p[i];
+					p[i]=p[j];
+					p[j]=temp2;
+				}
+			}
+		}
+		int timeout=0;
+		for(int i=0;i<l;i++)
+		{
+			if(at[i]>timeout)
+			{
+				timeout=timeout+at[i]+bt[i]-timeout;
+				st[i]=0;
+				tt[i]=bt[i];
+	
+			}
+			else
+			{
+				st[0]=0;tt[0]=bt[0];
+				for(int k=i+1;k<l;k++)
+				{
+					for(int j=i;j<l;j++)
+					{
+						if(bt[j]>bt[k])
+						{
+							temp=at[k];
+							at[k]=at[j];
+							at[j]=temp;
+							temp1=bt[k];
+							bt[k]=bt[j];
+							bt[j]=temp1;
+							temp2=p[k];
+							p[k]=p[j];
+							p[j]=temp2;
+						}
+					}
+				}
+				//for(int z=0;z<l;z++)
+				//System.out.print(i+""+bt[z]);
+				st[i]=timeout-at[i];
+				timeout=timeout+bt[i];
+				tt[i]=timeout-at[i];
+			}
+		}	
+		for(int i=0;i<l;i++)
+		System.out.println(p[i] +"  " +st[i]+ "  " +tt[i]);
+	}
+}

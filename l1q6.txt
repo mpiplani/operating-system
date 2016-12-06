@@ -1,0 +1,28 @@
+Ans.  
+#! /bin/bash # this code takes array as input # and sort it using bubble sort technique  
+declare -a arr;
+ for ((i=0;;i=$(($i+1))))
+ do
+ read p 
+ if [ $p -eq -1 ]  
+ then   
+ echo Input Taken  
+ break  
+ else   arr[i]=$p 
+ fi 
+ done 
+ echo Size of array is ${#arr[@]} 
+ size=${#arr[@]} 
+ for((i=0;i<$size;i=$(($i+1)))) 
+ do 
+ for((j=0;j<$(($size-1));j=$(($j+1)))) 
+ do  
+ if [ ${arr[$j]} -gt ${arr[$(($j+1))]} ];
+ then    
+ temp=${arr[$j]}    
+ arr[$j]=${arr[$(($j+1))]}
+ arr[$(($j+1))]=$temp 
+ fi  
+ done
+ done 
+ echo ${arr[@]}   

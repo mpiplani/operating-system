@@ -1,0 +1,12 @@
+Ans.   
+#! /bin/bash
+ # Takes one input 
+ # Calculate it's factorial  
+echo Enter a number 
+read n
+ p=1
+ for((i=1;i<=n;i=$(($i+1)))) 
+ do  
+ p=$(($p*$i))
+ done 
+ echo Factorial is $p 

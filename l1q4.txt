@@ -1,0 +1,3 @@
+Ans.  
+ ID_FIREFOX=$(ps -aux | grep firefox | grep -o root[‘ ‘]*[0-9]* | grep -wo [‘ ‘]*[0-9]*) 
+ kill -9 ID_FIREFOX 
